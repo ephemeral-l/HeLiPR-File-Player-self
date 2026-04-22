@@ -252,7 +252,7 @@ void ROSThread::Ready()
   ouster_thread_.thread_ = std::thread(&ROSThread::OusterThread,this);
   velodyne_thread_.thread_ = std::thread(&ROSThread::VelodyneThread,this);
   avia_thread_.thread_ = std::thread(&ROSThread::AviaThread,this);
-  aeva_thread_.thread_ = std::thread(&ROSThread::AevaThread,this);
+  // aeva_thread_.thread_ = std::thread(&ROSThread::AevaThread,this);
 }
 
 void ROSThread::DataStampThread()
