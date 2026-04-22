@@ -351,7 +351,7 @@ void ROSThread::InspvaThread()
 {
   while(1){
     std::unique_lock<std::mutex> ul(inspva_thread_.mutex_);
-    inspva_thread_.cv_.wait(ul);
+    inspva_thread_.cv_.wait(ul, [this]{ return !inspva_thread_.data_queue_.empty() || !inspva_thread_.active_; });
     if(inspva_thread_.active_ == false) return;
     ul.unlock();
     while(!inspva_thread_.data_queue_.empty()){
@@ -374,7 +374,7 @@ void ROSThread::ImuThread()
 {
   while(1){
     std::unique_lock<std::mutex> ul(imu_thread_.mutex_);
-    imu_thread_.cv_.wait(ul);
+    imu_thread_.cv_.wait(ul, [this]{ return !imu_thread_.data_queue_.empty() || !imu_thread_.active_; });
     if(imu_thread_.active_ == false) return;
     ul.unlock();
     while(!imu_thread_.data_queue_.empty()){
@@ -414,7 +414,7 @@ void ROSThread::OusterThread()
   int previous_file_index = 0;
   while(1){
     std::unique_lock<std::mutex> ul(ouster_thread_.mutex_);
-    ouster_thread_.cv_.wait(ul);
+    ouster_thread_.cv_.wait(ul, [this]{ return !ouster_thread_.data_queue_.empty() || !ouster_thread_.active_; });
     if(ouster_thread_.active_ == false) return;
     ul.unlock();
 
@@ -503,7 +503,7 @@ void ROSThread::VelodyneThread()
   int previous_file_index = 0;
   while(1){
     std::unique_lock<std::mutex> ul(velodyne_thread_.mutex_);
-    velodyne_thread_.cv_.wait(ul);
+    velodyne_thread_.cv_.wait(ul, [this]{ return !velodyne_thread_.data_queue_.empty() || !velodyne_thread_.active_; });
     if(velodyne_thread_.active_ == false) return;
     ul.unlock();
 
@@ -593,7 +593,7 @@ void ROSThread::AevaThread()
   int previous_file_index = 0;
   while(1){
     std::unique_lock<std::mutex> ul(aeva_thread_.mutex_);
-    aeva_thread_.cv_.wait(ul);
+    aeva_thread_.cv_.wait(ul, [this]{ return !aeva_thread_.data_queue_.empty() || !aeva_thread_.active_; });
     if(aeva_thread_.active_ == false) return;
     ul.unlock();
 std::cout.precision(20);
@@ -684,7 +684,7 @@ void ROSThread::AviaThread()
   int previous_file_index = 0;
   while(1){
     std::unique_lock<std::mutex> ul(avia_thread_.mutex_);
-    avia_thread_.cv_.wait(ul);
+    avia_thread_.cv_.wait(ul, [this]{ return !avia_thread_.data_queue_.empty() || !avia_thread_.active_; });
     if(avia_thread_.active_ == false) return;
     ul.unlock();
 
