@@ -114,7 +114,18 @@ Here's a step-by-step guide:
 4. Use the 'Stop skip' button to skip intervals when the vehicle remains stationary. This feature enhances the user experience by focusing on significant data.
 5. The loop button ensures that the data resumes playback from the beginning once completed.
 
-## 6. Contributors:
+## 6. Headless Mode (No GUI)
+
+To generate a ROS bag on a machine without a display, pass `--headless <data_folder>` to the `file_player` executable:
+
+```bash
+$ source devel/setup.bash
+$ rosrun file_player file_player --headless /path/to/Bridge02
+```
+
+This reuses the same data loaders and bag-writing path as the GUI's Save mode but skips `QApplication` so no X display is required. The scheduler runs at an accelerated rate; once the last stamp is reached, the tool waits for the LiDAR worker queues to drain (detected by the bag file size stabilizing) and then closes the bag. Output: `<data_folder>/0.bag`.
+
+## 7. Contributors:
 
 - **Jinyong Jeong**: Original creator of the package.
 - **Giseop Kim, Seungsang Yun**: Maintainers for different versions of the file player.
